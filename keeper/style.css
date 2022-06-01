@@ -1,0 +1,25 @@
+.sidetoside{
+    display: flex;
+    justify-content:space-between;
+  
+}
+
+
+.wrap
+{
+    
+   word-break: break-word;
+   
+    
+}
+
+.link{
+    cursor: pointer;
+}
+
+
+.fa-2x{
+
+    float: right;
+}
+
