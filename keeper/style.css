@@ -9,6 +9,7 @@
 {
     
    word-break: break-word;
+  
    
     
 }
@@ -18,8 +19,28 @@
 }
 
 
-.fa-2x{
 
+.filter
+{
+    max-width: 32%;
     float: right;
+    
 }
 
+.search-box{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+   
+}
+
+.wrap1{
+    max-width: 30%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+*{
+    font-size: 1.6vmin;
+    
+}

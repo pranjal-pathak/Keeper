@@ -4,26 +4,23 @@
 //event:diplay books, add book, remove book
 
 class Problem {
-  constructor(title, link, platform, topic, status, remarks,date) {
+  constructor(title, link, platform, topic, status, remarks, date) {
     this.title = title;
     this.link = link;
     this.platform = platform;
     this.topic = topic;
     this.status = status;
     this.remarks = remarks;
-   
-    this.date= date;
+
+    this.date = date;
   }
 }
 //
 class UI {
   static displayProblems() {
-    
-
     const problems = store.getProblems();
 
     problems.forEach((problem) => UI.addProblemToList(problem));
-
   }
 
   static addProblemToList(problem) {
@@ -31,30 +28,27 @@ class UI {
 
     const row = document.createElement("tr");
 
-   
-   
-
     row.innerHTML = `
        
    
         <td>${problem.date[0]}-${problem.date[1]}-${problem.date[2]}</td>
-        <td class="wrap "><a href=${problem.link} target="_blank" rel="noopener noreferrer" class="link">${problem.title}</td>
+        <td class="wrap"><a href=${problem.link} target="_blank" rel="noopener noreferrer" class="link">${problem.title}</td>
         <td >${problem.platform}</td>
         <td >${problem.topic}</td>
         <td>${problem.status}</td>
-        <td class="wrap">${problem.remarks}</td>
+        <td class="wrap text-center">${problem.remarks}</td>
       
        <td><a href="#" class=" btn btn-danger btn-sm delete">X</a></td>
         `;
 
-   
     list.appendChild(row);
+    //
   }
 
   static deleteProblem(el) {
     if (el.classList.contains("delete")) {
       el.parentElement.parentElement.remove();
-      UI.showAlert("Problem removed","info");
+      UI.showAlert("Problem removed", "info");
     }
   }
 
@@ -78,53 +72,63 @@ class UI {
     document.querySelector("#Status").value = "";
     document.querySelector("#Remarks").value = "";
   }
-}
 
-class store{
+  //filter problem
 
-    static getProblems()
+  static filterProblem(searchFor,searchIn) {
+  //  console.log(searchIn);
+    for(let i=0;i<searchIn.length;i++)
     {
-        let problems;
-        if(localStorage.getItem('problems')===null)
+      const divisions = searchIn[i].children;
+      for(let j = 0;j<divisions.length;j++)
+      {
+        if(divisions[j].textContent.toLowerCase().includes(searchFor))
         {
-            problems=[];
+          searchIn[i].style.display="table-row";
+          break;
         }
         else
         {
-            problems=JSON.parse(localStorage.getItem('problems'));
+          searchIn[i].style.display="none";
         }
-        
-        return problems;
+      }
+    }
+  }
 
+  
+}
+
+class store {
+  static getProblems() {
+    let problems;
+    if (localStorage.getItem("problems") === null) {
+      problems = [];
+    } else {
+      problems = JSON.parse(localStorage.getItem("problems"));
     }
 
-    static addProblem(problem)
-    {
-        const problems= store.getProblems();
+    return problems;
+  }
 
-        problems.push(problem);
+  static addProblem(problem) {
+    const problems = store.getProblems();
 
-        localStorage.setItem('problems',JSON.stringify(problems));
+    problems.push(problem);
 
-    }
+    localStorage.setItem("problems", JSON.stringify(problems));
+  }
 
-    static removeProblem(title)
-    {
-        const problems= store.getProblems();
+  static removeProblem(title) {
+    const problems = store.getProblems();
 
-        problems.forEach((problem,index) => {
+    problems.forEach((problem, index) => {
+      if (problem.title == title) {
+        problems.splice(index, 1);
+      }
+    });
 
-            if(problem.title==title)
-            {
-                problems.splice(index,1);
-
-
-            }
-        });
-
-        localStorage.setItem('problems',JSON.stringify(problems));
-
-    }
+    localStorage.setItem("problems", JSON.stringify(problems));
+  }
 }
 
 document.addEventListener("DOMContentLoaded", UI.displayProblems);
@@ -139,10 +143,9 @@ document.querySelector("#problem-form").addEventListener("submit", (e) => {
   const Status = document.querySelector("#Status").value;
   const Remarks = document.querySelector("#Remarks").value;
   const day = new Date().getDate();
-  const month = new Date().toLocaleString('default', { month: 'long' });
+  const month = new Date().toLocaleString("default", { month: "long" });
   const year = new Date().getFullYear();
-  const date= [day,month,year];
-  
+  const date = [day, month, year];
 
   //validate
 
@@ -151,21 +154,27 @@ document.querySelector("#problem-form").addEventListener("submit", (e) => {
     link == "" ||
     Platform == "" ||
     Status == "" ||
-    Topic == "" 
-    
+    Topic == ""
   ) {
     UI.showAlert("Please fill in all compulsory fields", "danger");
   } else {
     //instantiate problem
-    const problem = new Problem(title, link, Platform, Topic, Status, Remarks,date);
+    const problem = new Problem(
+      title,
+      link,
+      Platform,
+      Topic,
+      Status,
+      Remarks,
+      date
+    );
 
     //add problem to ui
 
     UI.addProblemToList(problem);
 
     store.addProblem(problem);
-    UI.showAlert("Problem Added successfully","success");
-
+    UI.showAlert("Problem Added successfully", "success");
 
     UI.clearFields();
   }
@@ -175,15 +184,26 @@ document.querySelector("#problem-form").addEventListener("submit", (e) => {
 
 document.querySelector("#problem-list").addEventListener("click", (e) => {
   UI.deleteProblem(e.target);
+  store.removeProblem(e.target.parentElement.parentElement.children[1].textContent);          // console.log(e.target.parentElement.parentElement.children)
+  });
 
-  store.removeProblem(e.target.parentElement.parentElement.children[1].textContent);
-  // console.log(e.target.parentElement.parentElement.children)
-});
+//search filter
 
 
-// //filter problems on basis of topics
 
-// document.querySelector('#Attempted').addEventListener("click",(e)=>{
+const searchInput = document.getElementById("search");
+const list = document.querySelector("#problem-list");
+const rows = list.getElementsByTagName("tr");
 
-//   console.log((e.target));
-// })
+// console.log(rows);
+
+
+searchInput.addEventListener("keyup",(e)=>{
+  
+  UI.filterProblem(e.target.value.toLowerCase(), rows);
+})
+
+
+
+
+

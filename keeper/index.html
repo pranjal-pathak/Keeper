@@ -15,25 +15,26 @@
 
     <title>Keeper</title>
   </head>
-  <body>
+  <body >
     <div class="container ">
-      <h1 class="display-4 text-center" >Keeper</h1>
+      <h1 class="display-4 text-center mt-2" >Keeper</h1>
+     <h6 class="text-muted text-center mb-5 mt-3 ">Keeper is a complete solution for documenting all the problems that you come across in your journey of learning DSA.</h6>
       <form id="problem-form">
         <div class="form-group mt-2">
-          <label for="title" class="form-label">Title</label>
+          <label for="title" class="form-label">Title*</label>
           <input type="text" id="title" class="form-control" />
         </div>
         
 
         <div class="form-group mt-2">
-          <label for="Link" class="form-label">Link</label>
+          <label for="Link" class="form-label">Link*</label>
           <input type="text" id="Link" class="form-control" />
         </div>
 
     
     <div class="sidetoside mt-2">
-      <div class="form-group ">
-        <label for="Platform" class="form-label">Platform</label>
+      <div class="form-group">
+        <label for="Platform" class="form-label">Platform*</label>
         <select name="Platform" id="Platform" class="form-select">
           <option value="" disabled selected>Select</option>
           <option value="Leetcode">Leetcode</option>
@@ -45,20 +46,26 @@
       </div>
 
       <div class="form-group ">
-        <label for="Topic" class="form-label">Topic</label>
+        <label for="Topic" class="form-label">Topic*</label>
         <select name="Topic" id="Topic" class="form-select ">
           <option value="" disabled selected>Select</option>
           <option value="Arrays">Arrays</option>
           <option value="Strings">Strings</option>
+          <option value="Matrix">Matrix</option>
+          <option value="Sorting">Sorting</option>
+          <option value="Searching">Searching</option>
+          <option value="Bit-Manipulation">Bit-Manipulation</option>
+          <option value="Recursion">Recursion</option>
+          <option value="DP">DP</option>
+          <option value="Linked-List">Linked-List</option>
           <option value="Tree">Tree</option>
-          <option value="Graph">Graph</option>
           <option value="Graph">Graph</option>
           <option value="Others">Others</option>
         </select>
       </div>
 
       <div class="form-group  ">
-        <label for="Status" class="form-label">Status</label>
+        <label for="Status" class="form-label">Status*</label>
         <select name="Status" id="Status" class=" form-select ">
           <option value="" disabled selected>Select</option>
           <option value="Solved">Solved</option>
@@ -70,6 +77,7 @@
         </select>
       </div>
 
+    
 
     </div>
 
@@ -83,6 +91,15 @@
           class="btn btn-primary btn-block mt-3"
         />
       </form>
+
+      <div class = "search-box">
+        <i>  <svg stroke="currentColor"  fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="4em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"></path></svg>  </i>
+        <input type="search" placeholder="Search" id="search" class=" wrap wrap1 form-control mt-2"/>
+      </div>
+
+     
+        
+      <div class="table-responsive">
       <table class="table table-striped mt-5">
         <thead>
           <tr>
@@ -93,23 +110,16 @@
             <th>Platform</th>
             <th>Topic</th>
             <th>Status</th>
-            <th>Remarks</th>
+            <th class="text-center">Remarks</th>
            <th></th>
             
           </tr>
           
         </thead>
-        <!-- <span><select name="Status" id="filter" class=" form-select form-select-sm ">
-          <option  value="" disabled selected>FILTER</option>
-          <option value="Solved">Solved</option>
-          <option id="Attempted" value="Attempted">Attempted</option>
-          <option value="Unlocked hints">Unlocked hints</option>
-          <option value="Unlocked Solution">Unlocked Solution</option>
-
-          
-        </select></span> -->
-        <tbody id="problem-list"></tbody>
+        
+        <tbody class="wrap" id="problem-list"></tbody>
       </table>
+      </div>
     </div>
     <script src="keeper.js"></script>
   </body>
