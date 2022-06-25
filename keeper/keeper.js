@@ -36,7 +36,7 @@ class UI {
         <td >${problem.platform}</td>
         <td >${problem.topic}</td>
         <td>${problem.status}</td>
-        <td class="wrap text-center">${problem.remarks}</td>
+        <td  class="wrap text-center"><div class= scroll>${problem.remarks}</div></td>
       
        <td><a href="#" class=" btn btn-danger btn-sm delete">X</a></td>
         `;
@@ -75,27 +75,20 @@ class UI {
 
   //filter problem
 
-  static filterProblem(searchFor,searchIn) {
-  //  console.log(searchIn);
-    for(let i=0;i<searchIn.length;i++)
-    {
+  static filterProblem(searchFor, searchIn) {
+    //  console.log(searchIn);
+    for (let i = 0; i < searchIn.length; i++) {
       const divisions = searchIn[i].children;
-      for(let j = 0;j<divisions.length;j++)
-      {
-        if(divisions[j].textContent.toLowerCase().includes(searchFor))
-        {
-          searchIn[i].style.display="table-row";
+      for (let j = 0; j < divisions.length; j++) {
+        if (divisions[j].textContent.toLowerCase().includes(searchFor)) {
+          searchIn[i].style.display = "";
           break;
-        }
-        else
-        {
-          searchIn[i].style.display="none";
+        } else {
+          searchIn[i].style.display = "none";
         }
       }
     }
   }
-
-  
 }
 
 class store {
@@ -184,12 +177,12 @@ document.querySelector("#problem-form").addEventListener("submit", (e) => {
 
 document.querySelector("#problem-list").addEventListener("click", (e) => {
   UI.deleteProblem(e.target);
-  store.removeProblem(e.target.parentElement.parentElement.children[1].textContent);          // console.log(e.target.parentElement.parentElement.children)
-  });
+  store.removeProblem(
+    e.target.parentElement.parentElement.children[1].textContent
+  ); // console.log(e.target.parentElement.parentElement.children)
+});
 
 //search filter
-
-
 
 const searchInput = document.getElementById("search");
 const list = document.querySelector("#problem-list");
@@ -197,13 +190,6 @@ const rows = list.getElementsByTagName("tr");
 
 // console.log(rows);
 
-
-searchInput.addEventListener("keyup",(e)=>{
-  
+searchInput.addEventListener("keyup", (e) => {
   UI.filterProblem(e.target.value.toLowerCase(), rows);
-})
-
-
-
-
-
+});
